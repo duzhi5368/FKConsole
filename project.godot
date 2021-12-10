@@ -10,7 +10,7 @@ config_version=4
 
 [application]
 
-config/name="Demo For Console"
+config/name="【游戏】游戏中控制台和命令"
 run/main_scene="res://MainScene.tscn"
 boot_splash/image="res://addons/FKConsole/Assets/logo.png"
 boot_splash/fullsize=false
