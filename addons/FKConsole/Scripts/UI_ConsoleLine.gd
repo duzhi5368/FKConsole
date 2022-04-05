@@ -25,35 +25,35 @@ func _ready():
 	self.connect('text_entered', self, 'execute')
 #-------------------------------------------------
 func _gui_input(event):
-	if Console.consume_input and self.has_focus():
+	if FKConsole.consume_input and self.has_focus():
 		accept_event()
 #-------------------------------------------------
 func _input(e):
 	if !is_visible_in_tree():
 		return
 	if Input.is_action_just_pressed(DefaultActions.CONSOLE_HISTORY_UP):
-		self._current_command = Console.History.current()
-		Console.History.previous()
+		self._current_command = FKConsole.History.current()
+		FKConsole.History.previous()
 		if self._tmp_user_entered_command == null:
 			self._tmp_user_entered_command = self.text
 	if Input.is_action_just_pressed(DefaultActions.CONSOLE_HISTORY_DOWN):
-		self._current_command = Console.History.next()
+		self._current_command = FKConsole.History.next()
 		if !self._current_command and self._tmp_user_entered_command != null:
 			self._current_command = self._tmp_user_entered_command
 			self._tmp_user_entered_command = null
 	if Input.is_action_just_pressed(DefaultActions.CONSOLE_AUTOCOMPLETE):
 		if self._autocomplete_triggered_timer and self._autocomplete_triggered_timer.get_time_left() > 0:
 			self._autocomplete_triggered_timer = null
-			var commands = Console.get_command_service().find(self.text)
+			var commands = FKConsole.get_command_service().find(self.text)
 			if commands.length == 1:
 				self.set_text(commands.get_by_index(0).get_name())
 			else:
 				for command in commands.get_value_iterator():
 					var name = command.get_name()
-					Console.write_line('[color=#ffff66][url=%s]%s[/url][/color]' % [ name, name ])
+					FKConsole.write_line('[color=#ffff66][url=%s]%s[/url][/color]' % [ name, name ])
 		else:
 			self._autocomplete_triggered_timer = get_tree().create_timer(1.0, true)
-			var autocompleted_command = Console.get_command_service().autocomplete(self.text)
+			var autocompleted_command = FKConsole.get_command_service().autocomplete(self.text)
 			self.set_text(autocompleted_command)
 	if self._current_command != null:
 		self.set_text(self._current_command.getText() if self._current_command and typeof(self._current_command) == TYPE_OBJECT else self._current_command)
@@ -67,20 +67,20 @@ func set_text(text, move_caret_to_end = true):
 		self.caret_position = text.length()
 #-------------------------------------------------
 func execute(input):
-	Console.write_line('[color=#999999]$[/color] ' + input)
+	FKConsole.write_line('[color=#999999]$[/color] ' + input)
 	var rawCommands = RegExLib.split(RECOMMANDS_SEPARATOR, input)
 	var parsedCommands = self._parse_commands(rawCommands)
 	for parsedCommand in parsedCommands:
 		# @var  Command/Command|null
-		var command = Console.get_command(parsedCommand.name)
+		var command = FKConsole.get_command(parsedCommand.name)
 		if command:
-			Console.Log.debug(Descriptions["Executing"] + ' `' + parsedCommand.command + '`.')
+			FKConsole.Log.debug(Descriptions["Executing"] + ' `' + parsedCommand.command + '`.')
 			command.execute(parsedCommand.arguments)
-			Console.emit_signal("command_executed", command)
+			FKConsole.emit_signal("command_executed", command)
 		else:
-			Console.write_line(Errors["Command_not_found"] % parsedCommand.name)
-			Console.emit_signal("command_not_found", parsedCommand.name)
-	Console.History.push(input)
+			FKConsole.write_line(Errors["Command_not_found"] % parsedCommand.name)
+			FKConsole.emit_signal("command_not_found", parsedCommand.name)
+	FKConsole.History.push(input)
 	self.clear()
 #-------------------------------------------------
 func _parse_commands(rawCommands):

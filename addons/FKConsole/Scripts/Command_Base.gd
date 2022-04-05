@@ -37,7 +37,7 @@ func execute(inArgs = []):
 	while i < self._arguments.size() and i < inArgs.size():
 		argAssig = self._arguments[i].set_value(inArgs[i])
 		if argAssig == FAILED:
-			Console.Log.warn(Descriptions["Argument"] % [self._arguments[i].get_type().to_string(), str(i + 1)])
+			FKConsole.Log.warn(Descriptions["Argument"] % [self._arguments[i].get_type().to_string(), str(i + 1)])
 			return
 		elif argAssig == Argument.ASSIGNMENT.CANCELED:
 			return OK
@@ -46,22 +46,22 @@ func execute(inArgs = []):
 	return self._target.call(args)
 #-------------------------------------------------
 func describe():
-	Console.write_line(Descriptions["Name"])
-	Console.write_line(self._get_command_name())
-	#Console.write_line()
-	Console.write_line(Descriptions["Usage"])
-	Console.write(self._get_command_name())
+	FKConsole.write_line(Descriptions["Name"])
+	FKConsole.write_line(self._get_command_name())
+	#FKConsole.write_line()
+	FKConsole.write_line(Descriptions["Usage"])
+	FKConsole.write(self._get_command_name())
 	if self._arguments.size() > 0:
 		for arg in self._arguments:
-			Console.write(' [color=#88ffff]%s[/color]' %  arg.describe())
+			FKConsole.write(' [color=#88ffff]%s[/color]' %  arg.describe())
 	else:
-		Console.write(' [color=#88ffff]' + Descriptions["NoParams"] + '[/color]')
-	Console.write_line()
-	#Console.write_line()
+		FKConsole.write(' [color=#88ffff]' + Descriptions["NoParams"] + '[/color]')
+	FKConsole.write_line()
+	#FKConsole.write_line()
 	if self._description:
-		Console.write_line(Descriptions["Description"])
-		Console.write_line('	' + self._description)
-	#Console.write_line()
+		FKConsole.write_line(Descriptions["Description"])
+		FKConsole.write_line('	' + self._description)
+	#FKConsole.write_line()
 #-------------------------------------------------
 func _get_command_name():
 	return '	[color=#ffff66][url=%s]%s[/url][/color]' % [self._name, self._name]

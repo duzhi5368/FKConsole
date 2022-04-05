@@ -33,21 +33,21 @@ func log(message, type = TYPE.INFO):
 #-------------------------------------------------
 func debug(message):
 	if logLevel <= TYPE.DEBUG:
-		Console.write_line('[color=#999999]' + get_time() + ' ' + '[DBUG]\t' +  str(message) + '[/color]')
+		FKConsole.write_line('[color=#999999]' + get_time() + ' ' + '[DBUG]\t' +  str(message) + '[/color]')
 	return self
 #-------------------------------------------------
 func info(message):
 	if logLevel <= TYPE.INFO:
-		Console.write_line('[color=#FFFAFA]' + get_time() + ' ' + '[INFO]\t' +  str(message) + '[/color]')
+		FKConsole.write_line('[color=#FFFAFA]' + get_time() + ' ' + '[INFO]\t' +  str(message) + '[/color]')
 	return self
 #-------------------------------------------------
 func warn(message):
 	if logLevel <= TYPE.WARNING:
-		Console.write_line('[color=#FFFF33]' + get_time() + ' ' + '[WARN]\t' +  str(message) + '[/color]')
+		FKConsole.write_line('[color=#FFFF33]' + get_time() + ' ' + '[WARN]\t' +  str(message) + '[/color]')
 	return self
 #-------------------------------------------------
 func error(message):
 	if logLevel <= TYPE.ERROR:
-		Console.write_line('[color=#FF0033]' + get_time() + ' ' + '[ERRO]\t' +  str(message) + '[/color]')
+		FKConsole.write_line('[color=#FF0033]' + get_time() + ' ' + '[ERRO]\t' +  str(message) + '[/color]')
 	return self
 #-------------------------------------------------

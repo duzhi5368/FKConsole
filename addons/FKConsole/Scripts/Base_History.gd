@@ -10,7 +10,7 @@ func _init(maxLength):
 func print_all():
 	var i = 1
 	for command in self.get_value_iterator():
-		Console.write_line(\
+		FKConsole.write_line(\
 			'[b]' + str(i) + '.[/b] [color=#ffff66][url=' + \
 			command + ']' + command + '[/url][/color]')
 		i += 1

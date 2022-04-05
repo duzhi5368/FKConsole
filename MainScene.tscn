@@ -1,20 +1,15 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://addons/FKConsole/Assets/Themes/SourceHanSerifSC_Regular.tres" type="Theme" id=1]
-[ext_resource path="res://MainScene.gd" type="Script" id=2]
 
 [node name="Node2D" type="Node2D"]
-script = ExtResource( 2 )
 
 [node name="Label" type="Label" parent="."]
-margin_left = 375.0
+margin_left = 239.0
 margin_top = 263.0
-margin_right = 710.0
-margin_bottom = 277.0
+margin_right = 840.0
+margin_bottom = 287.0
 theme = ExtResource( 1 )
-text = "按下 Ctrl + ~ 可开启控制台"
+text = "Windows下按下 Ctrl + ~ 可开启控制台，Mac下按下Control + Command + ~ 开启"
 align = 1
 valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}

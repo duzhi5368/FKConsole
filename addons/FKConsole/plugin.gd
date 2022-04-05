@@ -10,15 +10,14 @@ const DefaultActions = preload("./Scripts/UI_DefaultActions.gd")
 const PLUGIN_NAME = 'FKConsole'
 const PLUGIN_PATH = 'res://addons/FKConsole/UI/Console.tscn'
 
-# @var  Array
+# ------------------------------------------------------------------------------
 const ACTIONS = [
 	DefaultActions.console_toggle_props,
 	DefaultActions.console_autocomplete_props,
 	DefaultActions.console_history_up_props,
 	DefaultActions.console_history_down_props
 ]
-
-
+# ------------------------------------------------------------------------------
 func _enter_tree():
 	self.add_autoload_singleton(PLUGIN_NAME, PLUGIN_PATH)
 	for action_props in ACTIONS:
@@ -37,6 +36,7 @@ func _enter_tree():
 			})
 	var result = ProjectSettings.save()
 	assert(result == OK, "Failed to save project settings")
-
+# ------------------------------------------------------------------------------
 func _exit_tree():
 	self.remove_autoload_singleton(PLUGIN_NAME)
+# ------------------------------------------------------------------------------

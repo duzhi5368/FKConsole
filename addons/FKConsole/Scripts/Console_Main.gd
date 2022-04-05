@@ -15,8 +15,6 @@ const Errors = preload("./Text_zhCN.gd").ErrorMessages
 #-------------------------------------------------
 ## Signals
 #-------------------------------------------------
-# @param  bool  is_console_shown
-signal toggled(is_console_shown)
 # @param  String       name
 # @param  Reference    target
 # @param  String|null  target_name
@@ -64,8 +62,8 @@ func _ready():
 	self.ButtonCommand.connect('pressed', self.Line, 'execute', ['commands'])
 	self._console_box.hide()
 	self._animation_player.connect("animation_finished", self, "_toggle_animation_finished")
-	self.toggle_console()
 	set_process_input(true)
+	self.toggle_console()
 	var v = Engine.get_version_info()
 
 # see: http://patorjk.com/software/taag
@@ -81,11 +79,12 @@ func _ready():
 
 	self.write_line(\
 		Descriptions["Project"] + ': [' + ProjectSettings.get_setting("application/config/name") + \
-		"] (Godot " + str(v.major) + '.' + str(v.minor) + '.' + str(v.patch) + ' ' + v.status+")\n" + \
+		"] (Godot " + str(v.major) + '.' + str(v.minor) + '.' + str(v.patch) + ' ' + v.status+")" + \
 		Descriptions["ConsoleUsage"])
+	self.write_line("如果这行log出现了两次，则说明本类被重复加载，请移除一处引用。")
 	self.BaseCommands.new(self)
 #-------------------------------------------------
-func _input(e):
+func _process(delta):
 	if Input.is_action_just_pressed(DefaultActions.CONSOLE_TOGGLE):
 		self.toggle_console()
 #-------------------------------------------------
@@ -123,6 +122,7 @@ func clear():
 		self.Text.clear()
 #-------------------------------------------------
 func toggle_console():
+	#print("enter: " + String(self.is_console_shown))
 	if !self.is_console_shown:
 		previous_focus_owner = self.Line.get_focus_owner()
 		self._console_box.show()
@@ -136,7 +136,8 @@ func toggle_console():
 		previous_focus_owner = null
 		self._animation_player.play('fade')
 	is_console_shown = !self.is_console_shown
-	emit_signal("toggled", is_console_shown)
+	self.is_console_shown = is_console_shown
+	#print("leave: " + String(self.is_console_shown))
 	return self
 #-------------------------------------------------
 func _toggle_animation_finished(animation):
